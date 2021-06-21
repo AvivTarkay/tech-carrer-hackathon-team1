@@ -19,7 +19,7 @@ const mapStateToProps = (state: any) => {return {userData: state.user.userData.d
 
     const history = useHistory()
     const [jobOffer, setJobOffer] = useState<any[]>([])
-    const [selcted, setSelcted] = useState({})
+    // const [selcted, setSelcted] = useState({})
     const [company, setCompany] = useState('')
 
     
