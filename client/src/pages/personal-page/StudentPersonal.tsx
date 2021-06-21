@@ -1,5 +1,5 @@
 import React,{useState} from "react";
-import ReactDOM from "react-dom";
+// import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./student-personal.css";
 import { Layout } from "antd";

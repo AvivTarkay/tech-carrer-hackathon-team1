@@ -33,7 +33,7 @@ const mapStateToProps = (state: any) => {return {userData: state.user.userData}}
       }
       
     loginHandler()
-    }, [getUserUseToken, login, setUserData]);
+    }, [getUserUseToken, login, setUserData, token]);
 
 
     const classes = appStyle()

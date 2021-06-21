@@ -20,7 +20,7 @@ const Cards = () => {
         }
         tokenHandler();
 
-    }, [token])
+    }, [token, setToken])
 
     return (
         (studentsArray.length < 1) ?
@@ -29,6 +29,7 @@ const Cards = () => {
             <div >
                 <Row gutter={{ xs: 8, sm: 16, md: 24, lg: 32 }}>
                     {studentsArray.map((student, index) => <StudentCard key={index} num={index}  {...student} />)}
+                    
                 </Row>
             </div>
     )
