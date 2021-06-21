@@ -6,10 +6,12 @@ import { getManyJobOffers } from "../../utils/drafts/jobOffer.utils";
 import { Input, Row, Col, Spin } from "antd";
 import LinkdInRouter from "./LinkdInRouter";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export default function LinkdIn() {
   const { Search } = Input;
   const [fetchedDataDb, setFetchedDataDb] = useState<any>([]);
+  const [newJobs, setNewJobs] = useState<any>([]);
   const [UserInfo, setUserInfo] = useState("");
   
   useEffect(() => {
@@ -23,6 +25,21 @@ export default function LinkdIn() {
     
   }, []);
 
+  useEffect(()=>{
+    const getJobs = async()=>{
+      try {
+        const response =await axios("https://www.themuse.com/api/public/jobs?category=Corporate&category=Data%20Science&category=Design&category=Editor&category=HR&category=IT&category=Marketing&category=Product&category=Project%20Management&category=Recruiting&category=Software%20Engineer&category=UX&level=Entry%20Level&level=Mid%20Level&level=Senior%20Level&level=management&level=Internship&page=1&descending=true")
+        setNewJobs(response.data.results)
+      
+      } catch (error) {
+        console.log(error);
+        
+      }
+        }
+        getJobs()
+  },[])
+ 
+  
   return (
     
       (fetchedDataDb?.length > 0 ) ? 
@@ -46,7 +63,7 @@ export default function LinkdIn() {
                 className="allCardsCol"
               >
                 {React.Children.toArray(
-                  fetchedDataDb.map((item: any) => {
+                  newJobs.map((item: any) => {
                     return <JobCard setUser={setUserInfo} userItem={item} />;
                   })
                 )}

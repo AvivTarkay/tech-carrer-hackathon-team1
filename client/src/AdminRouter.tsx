@@ -45,9 +45,9 @@ function AdminRouter() {
       <Route path="/signUp/hr/:token/:id">
        <HrRegisterForm/>
       </Route>
-      < Route path="/recruiter">
+      {/* < Route path="/recruiter">
         <LinkdIn />
-      </Route>
+      </Route> */}
      < Route path="/recruiter">
             <LinkdIn/>
           </Route>
