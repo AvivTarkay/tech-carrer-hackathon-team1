@@ -51,27 +51,27 @@ export default function Job({ job }) {
 				<div className="d-flex justify-content-between">
 					<div>
 						<Card.Title>
-							{<Selection />}
 							<span className="text-muted font-weight-light">{job.name}</span>
 						</Card.Title>
 						<Card.Subtitle className="text-muted mb-2">
 							{new Date(job.publication_date).toLocaleDateString()}
 						</Card.Subtitle>
-						<Badge variant="secondary" className="mr-2">
+						{/* <Badge variant="secondary" className="mr-2">
 							{job.type}
-						</Badge>
-						<Badge variant="secondary">{job.location}</Badge>
+						</Badge> */}
+						<Badge variant="secondary">{job.locations.name}</Badge>
 						<div style={{ wordBreak: "break-all" }}>
-							<ReactMarkdown source={job.how_to_apply} />
+							<span source={job.how_to_apply} />
 						</div>
 					</div>
 					<img
 						className="d-none d-md-block"
 						height="50"
 						alt={job.company}
-						src={job.company_logo}
+						src={job.refs.logo_image}
 					/>
 				</div>
+
 				<Card.Text>
 					<Button
 						onClick={() => setOpen(prevOpen => !prevOpen)}
@@ -82,7 +82,9 @@ export default function Job({ job }) {
 				</Card.Text>
 				<Collapse in={open}>
 					<div className="mt-4">
-						<ReactMarkdown source={job.description} />
+						{job.description}
+						{/* <link to={job.how_to_apply}>How to apply</link> */}
+						{/* <ReactMarkdown source={job.description} /> */}
 					</div>
 				</Collapse>
 			</Card.Body>
