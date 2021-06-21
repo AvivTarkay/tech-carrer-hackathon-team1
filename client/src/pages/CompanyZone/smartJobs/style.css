@@ -1,0 +1,10 @@
+.cardsWrapper {
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	justify-content: space-around;
+}
+.companyCard {
+	margin-left: 15px;
+	margin-bottom: 15px;
+}

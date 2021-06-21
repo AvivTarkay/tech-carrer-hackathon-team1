@@ -1,19 +1,19 @@
 import React, { useState } from "react";
-import { Card, Badge, Button, Collapse } from "react-bootstrap";
+import { Card, Avatar } from "antd";
+import {
+	EditOutlined,
+	EllipsisOutlined,
+	SettingOutlined,
+} from "@ant-design/icons";
+// import { Card, Badge, Button, Collapse } from "react-bootstrap";
 import ReactMarkdown from "react-markdown";
 import { Select } from "antd";
 const { Option } = Select;
 
+const { Meta } = Card;
+
 export default function Job({ job }) {
 	const [open, setOpen] = useState(false);
-	//   aggregations: {}
-	// items_per_page: 20
-	// page: 1
-	// page_count: 20
-	// results: (20) [{…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}, {…}]
-	// timed_out: false
-	// took: 1
-	// total: 397
 	// description: "Splice is creating a new way to make music—and making it accessible to all. "
 	// id: 11871
 	// industries: (2) [{…}, {…}]
@@ -21,7 +21,15 @@ export default function Job({ job }) {
 	// model_type: "companies"
 	// name: "Splice"
 	// publication_date: "2019-12-13T17:25:41.928011Z"
-	// refs: {landing_page: "https://www.themuse.com/companies/splice", jobs_page: "https://www.themuse.com/search/jobs/c-splice", mini_f1_image: "https://pilbox.themuse.com/image.jpg?url=https%3A%…c8c72039cb49c6a09ff913283bdece&h=135&prog=1&w=183", f2_image: "https://assets.themuse.com/uploaded/companies/1187…18a0c31f0ca892638bd913361c99dbcf1088d03928b5555b3", logo_image: "https://assets.themuse.com/uploaded/companies/1187…d19b9a68e138940afd62e2f9336f0465b740bbdce3381b9ef", …}
+	// refs:
+	// f1_image: "https://assets.themuse.com/uploaded/companies/11871/about_modules/91366/f2ff9259-e438-4f37-846a-cda44ed8285b.jpg?v=6096c3b9cbeee1865db8d30d1cc6f31e5fc8c72039cb49c6a09ff913283bdece"
+	// f2_image: "https://assets.themuse.com/uploaded/companies/11871/about_modules/91366/c289a674-4180-41e2-8498-8d7f44459113.jpg?v=1384709e7be6e9518a0c31f0ca892638bd913361c99dbcf1088d03928b5555b3"
+	// f3_image: "https://assets.themuse.com/uploaded/companies/11871/about_modules/91366/ee8f2baa-c130-4342-b697-d73790aff2a0.jpg?v=bf71fc3bc25b12dd91a96128c50c8ccefbea1fb88bcd1b0f0d2877e6d6d51441"
+	// jobs_page: "https://www.themuse.com/search/jobs/c-splice"
+	// landing_page: "https://www.themuse.com/companies/splice"
+	// logo_image: "https://assets.themuse.com/uploaded/companies/11871/small_logo.png?v=d1635a0c6a20856d19b9a68e138940afd62e2f9336f0465b740bbdce3381b9ef"
+	// mini_f1_image: "https://pilbox.themuse.com/image.jpg?url=https%3A%2F%2Fassets.themuse.com%2Fuploaded%2Fcompanies%2F11871%2Fabout_modules%2F91366%2Ff2ff9259-e438-4f37-846a-cda44ed8285b.jpg%3Fv%3D6096c3b9cbeee1865db8d30d1cc6f31e5fc8c72039cb49c6a09ff913283bdece&h=135&prog=1&w=183"
+	// __proto__: Object
 	// short_name: "splice"
 	// size: {name: "Medium Size", short_name: "medium"}
 	// tags: []
@@ -29,65 +37,40 @@ export default function Job({ job }) {
 	function handleChange(value) {
 		console.log(`selected ${value}`);
 	}
-	const Selection = () => {
-		return (
-			<Select
-				defaultValue="industries"
-				style={{ width: 120 }}
-				onChange={handleChange}
-			>
-				{React.Children.toArray(
-					job.industries.map(title => {
-						return <Option value={`${title}`}>{`${title.name}`}</Option>;
-					})
-				)}
-			</Select>
-		);
-	};
+	// const Selection = () => {
+	// 	return (
+	// 		<Select
+	// 			defaultValue="industries"
+	// 			style={{ width: 120 }}
+	// 			onChange={handleChange}
+	// 		>
+	// 			{React.Children.toArray(
+	// 				job.industries.map(title => {
+	// 					return <Option value={`${title}`}>{`${title.name}`}</Option>;
+	// 				})
+	// 			)}
+	// 		</Select>
+	// 	);
+	// };
 
 	return (
-		<Card className="mb-3">
-			<Card.Body>
-				<div className="d-flex justify-content-between">
-					<div>
-						<Card.Title>
-							<span className="text-muted font-weight-light">{job.name}</span>
-						</Card.Title>
-						<Card.Subtitle className="text-muted mb-2">
-							{new Date(job.publication_date).toLocaleDateString()}
-						</Card.Subtitle>
-						{/* <Badge variant="secondary" className="mr-2">
-							{job.type}
-						</Badge> */}
-						<Badge variant="secondary">{job.locations.name}</Badge>
-						<div style={{ wordBreak: "break-all" }}>
-							<span source={job.how_to_apply} />
-						</div>
-					</div>
-					<img
-						className="d-none d-md-block"
-						height="50"
-						alt={job.company}
-						src={job.refs.logo_image}
-					/>
-				</div>
-
-				<Card.Text>
-					<Button
-						onClick={() => setOpen(prevOpen => !prevOpen)}
-						variant="primary"
-					>
-						{open ? "Hide Details" : "View Details"}
-					</Button>
-				</Card.Text>
-				<Collapse in={open}>
-					<div className="mt-4">
-						{job.description}
-						{/* <link to={job.how_to_apply}>How to apply</link> */}
-						{/* <ReactMarkdown source={job.description} /> */}
-					</div>
-				</Collapse>
-			</Card.Body>
+		<Card
+			className="companyCard"
+			style={{ width: 250 }}
+			cover={<img alt="example" src={job?.refs?.mini_f1_image} />}
+			// actions={[
+			// 	<SettingOutlined key="setting" />,
+			// 	<EditOutlined key="edit" />,
+			// 	<EllipsisOutlined key="ellipsis" />,
+			// ]}
+		>
+			<Meta
+				avatar={<Avatar src={job?.refs?.logo_image} />}
+				title={job?.short_name}
+			/>
+			<a href={job?.refs?.landing_page} target="_blank">
+				Visit Company
+			</a>
 		</Card>
 	);
 }

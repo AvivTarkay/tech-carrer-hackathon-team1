@@ -1,3 +1,4 @@
+import "./style.css";
 import React, { useState } from "react";
 import useFetchJobs from "./useFetchJobs";
 import { Container } from "react-bootstrap";
@@ -22,16 +23,18 @@ function App() {
 	console.log("🚀 ~ file: App.js ~ line 12 ~ App ~ jobs", jobs);
 	return (
 		<Container className="my-4">
-			<h1 className="mb-4">Jobs</h1>
+			<h1 className="mb-4">Companies</h1>
 			<SearchForm params={params} onParamChange={handleParamChange} />
 			<JobsPagination page={page} setPage={setPage} hasNextPage={hasNextPage} />
-			{loading && <h1>Loading...</h1>}
-			{error && <h1>Error. Try Refreshing.</h1>}
-			{React.Children.toArray(
-				jobs?.results?.map(job => {
-					return <Job job={job} />;
-				})
-			)}
+			<div className="cardsWrapper">
+				{loading && <h1>Loading...</h1>}
+				{error && <h1>Error. Try Refreshing.</h1>}
+				{React.Children.toArray(
+					jobs?.results?.map(job => {
+						return <Job job={job} />;
+					})
+				)}
+			</div>
 			<JobsPagination page={page} setPage={setPage} hasNextPage={hasNextPage} />
 		</Container>
 	);
