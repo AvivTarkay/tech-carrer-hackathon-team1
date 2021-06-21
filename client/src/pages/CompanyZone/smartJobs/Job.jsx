@@ -1,19 +1,8 @@
-import React, { useState } from "react";
 import { Card, Avatar } from "antd";
-import {
-	EditOutlined,
-	EllipsisOutlined,
-	SettingOutlined,
-} from "@ant-design/icons";
-// import { Card, Badge, Button, Collapse } from "react-bootstrap";
-import ReactMarkdown from "react-markdown";
-import { Select } from "antd";
-const { Option } = Select;
 
 const { Meta } = Card;
 
 export default function Job({ job }) {
-	const [open, setOpen] = useState(false);
 	// description: "Splice is creating a new way to make music—and making it accessible to all. "
 	// id: 11871
 	// industries: (2) [{…}, {…}]
@@ -34,35 +23,12 @@ export default function Job({ job }) {
 	// size: {name: "Medium Size", short_name: "medium"}
 	// tags: []
 	// twitter: null
-	function handleChange(value) {
-		console.log(`selected ${value}`);
-	}
-	// const Selection = () => {
-	// 	return (
-	// 		<Select
-	// 			defaultValue="industries"
-	// 			style={{ width: 120 }}
-	// 			onChange={handleChange}
-	// 		>
-	// 			{React.Children.toArray(
-	// 				job.industries.map(title => {
-	// 					return <Option value={`${title}`}>{`${title.name}`}</Option>;
-	// 				})
-	// 			)}
-	// 		</Select>
-	// 	);
-	// };
 
 	return (
 		<Card
 			className="companyCard"
 			style={{ width: 250 }}
 			cover={<img alt="example" src={job?.refs?.mini_f1_image} />}
-			// actions={[
-			// 	<SettingOutlined key="setting" />,
-			// 	<EditOutlined key="edit" />,
-			// 	<EllipsisOutlined key="ellipsis" />,
-			// ]}
 		>
 			<Meta
 				avatar={<Avatar src={job?.refs?.logo_image} />}

@@ -16,7 +16,7 @@ import JobEditPage from "./pages/CompanyZone/JobEditPage";
 
 import { Switch, Route } from "react-router-dom";
 import AddJob from "./pages/CompanyZone/AddJob";
-import App from "./pages/CompanyZone/smartJobs/App";
+import App from "./pages/CompanyZone/smartJobs/Companies";
 
 function AdminRouter() {
 	return (

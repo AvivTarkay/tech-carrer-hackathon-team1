@@ -14,8 +14,9 @@ const ACTIONS = {
 	UPDATE_HAS_NEXT_PAGE: "update-has-next-page",
 };
 
-const BASE_URL =
-	"https://www.themuse.com/api/public/companies?industry=Engineering&industry=Tech&size=Small%20Size&size=Medium%20Size&size=Large%20Size&page=1&descending=true";
+const PF = process.env.REACT_APP_PUBLIC_URL;
+
+const BASE_URL = `${PF}?industry=Engineering&industry=Tech&size=Small%20Size&size=Medium%20Size&size=Large%20Size&page=1&descending=true`;
 
 function reducer(state, action) {
 	switch (action.type) {
@@ -38,6 +39,10 @@ function reducer(state, action) {
 }
 
 export default function useFetchJobs(params, page) {
+	console.log(
+		"🚀 ~ file: useFetchJobs.jsx ~ line 42 ~ useFetchJobs ~ params",
+		params
+	);
 	const [state, dispatch] = useReducer(reducer, { jobs: [], loading: true });
 
 	useEffect(() => {
@@ -49,7 +54,6 @@ export default function useFetchJobs(params, page) {
 				params: { markdown: true, page: page, ...params },
 			})
 			.then(res => {
-				console.log(res);
 				dispatch({ type: ACTIONS.GET_DATA, payload: { jobs: res.data } });
 			})
 			.catch(e => {
@@ -57,22 +61,22 @@ export default function useFetchJobs(params, page) {
 				dispatch({ type: ACTIONS.ERROR, payload: { error: e } });
 			});
 
-		// const cancelToken2 = axios.CancelToken.source();
-		// axios
-		// 	.get(BASE_URL, {
-		// 		cancelToken: cancelToken2.token,
-		// 		params: { markdown: true, page: page + 1, ...params },
-		// 	})
-		// 	.then(res => {
-		// 		dispatch({
-		// 			type: ACTIONS.UPDATE_HAS_NEXT_PAGE,
-		// 			payload: { hasNextPage: res.data.length !== 0 },
-		// 		});
-		// 	})
-		// 	.catch(e => {
-		// 		if (axios.isCancel(e)) return;
-		// 		dispatch({ type: ACTIONS.ERROR, payload: { error: e } });
-		// 	});
+		const cancelToken2 = axios.CancelToken.source();
+		axios
+			.get(BASE_URL, {
+				cancelToken: cancelToken2.token,
+				params: { markdown: true, page: page + 1, ...params },
+			})
+			.then(res => {
+				dispatch({
+					type: ACTIONS.UPDATE_HAS_NEXT_PAGE,
+					payload: { hasNextPage: res.data.page_count !== 0 },
+				});
+			})
+			.catch(e => {
+				if (axios.isCancel(e)) return;
+				dispatch({ type: ACTIONS.ERROR, payload: { error: e } });
+			});
 
 		return () => {
 			cancelToken1.cancel();
