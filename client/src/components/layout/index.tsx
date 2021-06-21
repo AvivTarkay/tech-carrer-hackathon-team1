@@ -6,8 +6,10 @@ import Login from "../loginForm/Login";
 import service from "../../utils";
 import "./style.css";
 import "antd/dist/antd.css";
+import LayoutFooter from '../footer/LayoutFooter';
 const { login } = service;
 const { Header, Content, Footer } = Layout;
+
 
 function LayoutMain(props: any) {
   const [isModalVisible, setIsModalVisible] = useState(false);
@@ -134,9 +136,19 @@ function LayoutMain(props: any) {
           </Content>
         </Layout>
       </Content>
-
       <img />
-    </Layout>
+      <Footer style={{
+          borderTop: '1px solid #e8e8e8',
+          position: 'fixed',
+          left: 0,
+          bottom: 0,
+          width: '100vw',
+          backgroundColor: 'white',
+          textAlign: 'center'
+      } }>    
+      <LayoutFooter/>
+</Footer>
+</Layout>
   );
 }
 
