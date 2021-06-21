@@ -1,6 +1,5 @@
-import React,{useState,useContext} from "react";
-import { Switch, Route,useParams } from "react-router-dom";
-import { idText } from "typescript";
+import React from "react";
+import { Switch, Route, useParams } from "react-router-dom";
 
 import CardsDetail from "./CardsDetail";
 
