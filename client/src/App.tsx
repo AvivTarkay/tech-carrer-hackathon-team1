@@ -1,9 +1,9 @@
-import components from './components'
-import styles from './styles'
-import React, { useEffect } from 'react';
-import { connect } from 'react-redux';
-import service from './utils';
-import usersActions from './redux/actions/user.actions';
+import components from "./components";
+import styles from "./styles";
+import React, { useEffect } from "react";
+import { connect } from "react-redux";
+import service from "./utils";
+import usersActions from "./redux/actions/user.actions";
 
 const { setUserData } = usersActions.usersActions;
 const mapDispatchToProps = (dispatch: any) => ({
