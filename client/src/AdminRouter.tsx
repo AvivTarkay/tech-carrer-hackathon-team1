@@ -22,6 +22,7 @@ import {
   Route
 } from "react-router-dom";
 import AddJob from './pages/CompanyZone/AddJob';
+import App from './pages/CompanyZone/smartJobs/App';
 
 
 function AdminRouter() {
@@ -34,7 +35,7 @@ function AdminRouter() {
         <Home />
       </Route>
       <Route path="/hr">
-        <JobCards />
+        <App />
       </Route>
       <Route path="/JobEditPage">
         <JobEditPage/>
