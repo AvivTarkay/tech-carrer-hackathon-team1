@@ -1,33 +1,44 @@
 import { Select } from "antd";
-// const { Option } = Select;
+const { Option } = Select;
 
-// const industries = [
-// 	"Client Services",
-// 	"Engineering",
-// 	"Media",
-// 	"Tech",
-// 	"Social Media",
-// 	"Government",
-// 	"Finance",
-// ];
-// const companySize = ["Small Size", "Large Size", "Medium Size"];
-// const industryList = [];
-// const companyList = [];
+const jobCategory = [
+	"Corporate",
+	"Data Science",
+	"Design",
+	"Editor",
+	"HR",
+	"IT",
+	"Marketing",
+	"Product",
+	"Project Management",
+	"Recruiting",
+	"Software Engineer",
+	"UX",
+];
+const jobLevel = [
+	"Entry Level",
+	"Mid Level",
+	"Senior Level",
+	"management",
+	"Internship",
+];
+const levelList = [];
+const companyList = [];
 
-// industries.forEach(industry =>
-// 	industryList.push(<Option key={industry}>{industry}</Option>)
-// );
-// companySize.forEach(company =>
-// 	companyList.push(<Option key={company}>{company}</Option>)
-// );
+jobCategory.forEach(industry =>
+	companyList.push(<Option key={industry}>{industry}</Option>)
+);
+jobLevel.forEach(company =>
+	levelList.push(<Option key={company}>{company}</Option>)
+);
 
-export default function SearchForm(/*{ setCompanyParams, setIndustryParams }*/) {
-	// function handleChangeIndustry(value) {
-	// 	setIndustryParams(value);
-	// }
-	// function handleChangeCompany(value) {
-	// 	setCompanyParams(value);
-	// }
+export default function SearchForm({ setCategoriesParam, setLevelParam }) {
+	function handleChangeCategory(value) {
+		setCategoriesParam(value);
+	}
+	function handleChangeCompany(value) {
+		setLevelParam(value);
+	}
 	return (
 		<div className="searchContainer">
 			<div className="searchOne">
@@ -37,9 +48,9 @@ export default function SearchForm(/*{ setCompanyParams, setIndustryParams }*/) 
 					style={{ width: "100%" }}
 					placeholder="Please select"
 					defaultValue={"Engineering"}
-					// onChange={handleChangeIndustry}
+					onChange={handleChangeCategory}
 				>
-					{/* {industryList} */}
+					{companyList}
 				</Select>
 			</div>
 			<div className="searchTwo">
@@ -49,9 +60,9 @@ export default function SearchForm(/*{ setCompanyParams, setIndustryParams }*/) 
 					style={{ width: "100%" }}
 					placeholder="Please select"
 					defaultValue={"Large Size"}
-					// onChange={handleChangeCompany}
+					onChange={handleChangeCompany}
 				>
-					{/* {companyList} */}
+					{levelList}
 				</Select>
 			</div>
 		</div>

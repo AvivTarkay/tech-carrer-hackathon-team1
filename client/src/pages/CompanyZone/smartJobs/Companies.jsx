@@ -6,7 +6,7 @@ import Job from "./Job";
 import JobsPagination from "./JobsPagination";
 import SearchForm from "./SearchForm";
 
-function App() {
+function Companies() {
 	const [companyParams, setCompanyParams] = useState([]);
 	const [industryParams, setIndustryParams] = useState([]);
 	const [page, setPage] = useState(1);
@@ -20,6 +20,7 @@ function App() {
 	return (
 		<Container className="my-4">
 			<h1 className="mb-4">Companies</h1>
+			<h3 style={{ fontWeight: "lighter" }}>Total Companies: {jobs.total}</h3>
 			<SearchForm
 				setCompanyParams={setCompanyParams}
 				setIndustryParams={setIndustryParams}
@@ -39,4 +40,4 @@ function App() {
 	);
 }
 
-export default App;
+export default Companies;

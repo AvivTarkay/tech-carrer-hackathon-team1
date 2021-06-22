@@ -2,6 +2,7 @@ import { Select } from "antd";
 const { Option } = Select;
 
 const industries = [
+	"Advertising and Agencies",
 	"Client Services",
 	"Engineering",
 	"Media",
@@ -9,6 +10,7 @@ const industries = [
 	"Social Media",
 	"Government",
 	"Finance",
+	"Entertainment & Gaming",
 ];
 const companySize = ["Small Size", "Large Size", "Medium Size"];
 const industryList = [];
