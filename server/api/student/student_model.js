@@ -10,6 +10,7 @@ const student = new Schema({
         isGraduated: Boolean,
         courseName: String,
         isWorking:Boolean,
+        currentJob: String,
         cycle:String,
         isAuth: Boolean,
         token: String,

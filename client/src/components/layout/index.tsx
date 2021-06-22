@@ -6,6 +6,7 @@ import Login from "../loginForm/Login";
 import service from "../../utils";
 import "./style.css";
 import "antd/dist/antd.css";
+import LayoutFooter from "../footer/LayoutFooter";
 const { login } = service;
 const { Header, Content, Footer } = Layout;
 
@@ -129,13 +130,24 @@ function LayoutMain(props: any) {
           className="site-layout-background"
           style={{ padding: "24px 0" }}
         >
-          <Content style={{ padding: "0 24px", minHeight: 280 }}>
+          <Content style={{ padding: "0 24px", minHeight: 280}}>
             <AdminRouter />
           </Content>
         </Layout>
       </Content>
 
       <img />
+      <Footer style={{
+          borderTop: '1px solid #e8e8e8',
+          position: 'fixed',
+          left: 0,
+          bottom: 0,
+          width: '100vw',
+          backgroundColor: 'white',
+          textAlign: 'center'
+      } }>   
+        <LayoutFooter />
+      </Footer>
     </Layout>
   );
 }
