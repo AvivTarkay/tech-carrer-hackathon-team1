@@ -8,3 +8,18 @@
 	margin-left: 15px;
 	margin-bottom: 15px;
 }
+.searchContainer {
+	display: flex;
+	justify-content: center;
+	padding: 15px;
+	margin: 20px 0;
+}
+
+.searchOne,
+.searchTwo {
+	width: 400px;
+	margin-left: 15px;
+}
+.inputRight {
+	width: 100%;
+}

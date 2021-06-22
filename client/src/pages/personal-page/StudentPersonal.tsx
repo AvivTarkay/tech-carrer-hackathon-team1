@@ -1,4 +1,4 @@
-import React,{useState} from "react";
+// import React,{useState} from "react";
 // import ReactDOM from "react-dom";
 import "antd/dist/antd.css";
 import "./student-personal.css";
@@ -6,7 +6,7 @@ import { Layout } from "antd";
 import { GithubOutlined } from "@ant-design/icons";
 import { FacebookOutlined } from "@ant-design/icons";
 import { LinkedinOutlined } from "@ant-design/icons";
-import service from "../../utils";
+// import service from "../../utils";
 // const { login } = service;
 const { Content } = Layout;
 // Header, Footer, Sider,
@@ -34,7 +34,7 @@ export default function StudentPersonal() {
 					<button className="editButtonUserCarrd">edit</button>
 				</div>
 				<div className="userCardImage">
-					<img src="/welcom.png"></img>
+					<img src="/welcom.png" alt=""></img>
 				</div>
 			</div>
 		</Content>

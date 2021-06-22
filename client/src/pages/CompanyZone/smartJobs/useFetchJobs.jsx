@@ -1,4 +1,4 @@
-import { useReducer, useEffect } from "react";
+import { useReducer, useEffect, useState } from "react";
 import axios from "axios";
 // {
 // 		auth: {
@@ -14,8 +14,7 @@ const ACTIONS = {
 	UPDATE_HAS_NEXT_PAGE: "update-has-next-page",
 };
 
-const BASE_URL =
-	"https://www.themuse.com/api/public/companies?industry=Engineering&industry=Tech&size=Small%20Size&size=Medium%20Size&size=Large%20Size&page=1&descending=true";
+const PF = process.env.REACT_APP_PUBLIC_URL;
 
 function reducer(state, action) {
 	switch (action.type) {
@@ -37,19 +36,35 @@ function reducer(state, action) {
 	}
 }
 
-export default function useFetchJobs(params, page) {
+export default function useFetchJobs(companyParams, industryParams, page) {
+	let BASE_URL = `${PF}?industry=Engineering&size=Small%20Size&size=Medium%20Size&size=Large%20Size&page=1&descending=true`;
+
+	const companyObj = {};
+
+	companyParams.forEach((key, i) => {
+		companyObj[`${i}`] = key.replace(/ /g, "%20");
+	});
+	const industry = {};
+	industryParams.forEach((key, i) => {
+		industry[`${i}`] = key.replace(/ /g, "%20");
+	});
+
 	const [state, dispatch] = useReducer(reducer, { jobs: [], loading: true });
 
+	// if (Object.keys(industry).length !== 0) {
+	// 	BASE_URL = `${BASE_URL}&industry=${industry[0]}`;
+	// 	console.log(BASE_URL);
+	// }
 	useEffect(() => {
 		const cancelToken1 = axios.CancelToken.source();
 		dispatch({ type: ACTIONS.MAKE_REQUEST });
 		axios
 			.get(BASE_URL, {
 				cancelToken: cancelToken1.token,
-				params: { markdown: true, page: page, ...params },
+				params: { markdown: true, page: page },
 			})
 			.then(res => {
-				console.log(res);
+				console.log(res.data);
 				dispatch({ type: ACTIONS.GET_DATA, payload: { jobs: res.data } });
 			})
 			.catch(e => {
@@ -57,28 +72,28 @@ export default function useFetchJobs(params, page) {
 				dispatch({ type: ACTIONS.ERROR, payload: { error: e } });
 			});
 
-		// const cancelToken2 = axios.CancelToken.source();
-		// axios
-		// 	.get(BASE_URL, {
-		// 		cancelToken: cancelToken2.token,
-		// 		params: { markdown: true, page: page + 1, ...params },
-		// 	})
-		// 	.then(res => {
-		// 		dispatch({
-		// 			type: ACTIONS.UPDATE_HAS_NEXT_PAGE,
-		// 			payload: { hasNextPage: res.data.length !== 0 },
-		// 		});
-		// 	})
-		// 	.catch(e => {
-		// 		if (axios.isCancel(e)) return;
-		// 		dispatch({ type: ACTIONS.ERROR, payload: { error: e } });
-		// 	});
+		const cancelToken2 = axios.CancelToken.source();
+		axios
+			.get(BASE_URL, {
+				cancelToken: cancelToken2.token,
+				params: { markdown: true, page: page + 1 },
+			})
+			.then(res => {
+				dispatch({
+					type: ACTIONS.UPDATE_HAS_NEXT_PAGE,
+					payload: { hasNextPage: res.data.page_count !== 0 },
+				});
+			})
+			.catch(e => {
+				if (axios.isCancel(e)) return;
+				dispatch({ type: ACTIONS.ERROR, payload: { error: e } });
+			});
 
 		return () => {
 			cancelToken1.cancel();
-			// cancelToken2.cancel();
+			cancelToken2.cancel();
 		};
-	}, [params, page]);
+	}, [page, BASE_URL]);
 
 	return state;
 }
