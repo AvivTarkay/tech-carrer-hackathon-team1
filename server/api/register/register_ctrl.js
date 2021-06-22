@@ -220,7 +220,7 @@ async function registerUser(req, res) {
       success: false,
       message: unsupportedRole("registerUser"),
     });
-  const getUserSuccess = () =>
+  const getUserSuess = () =>
     res.status(400).json({
       success: false,
       message: duplicateItem(`register ${role}`),
