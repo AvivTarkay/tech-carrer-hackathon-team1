@@ -7,35 +7,23 @@ import JobsPagination from "./JobsPagination";
 import SearchForm from "./SearchForm";
 
 function App() {
-	const [params, setParams] = useState({});
-
+	const [companyParams, setCompanyParams] = useState([]);
+	const [industryParams, setIndustryParams] = useState([]);
 	const [page, setPage] = useState(1);
 
-	const { jobs, loading, error, hasNextPage } = useFetchJobs(params, page);
-
-	function handleParamChange(e) {
-		const param = e.target.name;
-		console.log(
-			"🚀 ~ file: Companies.jsx ~ line 18 ~ handleParamChange ~ param",
-			param
-		);
-		const value = e.target.value;
-		console.log(
-			"🚀 ~ file: Companies.jsx ~ line 19 ~ handleParamChange ~ value",
-			value
-		);
-
-		setPage(1);
-		setParams(prevParams => {
-			return { ...prevParams, [param]: value };
-		});
-	}
-	console.log("🚀 ~ file: Companies.jsx ~ line 11 ~ App ~ params", params);
+	const { jobs, loading, error, hasNextPage } = useFetchJobs(
+		companyParams,
+		industryParams,
+		page
+	);
 
 	return (
 		<Container className="my-4">
 			<h1 className="mb-4">Companies</h1>
-			<SearchForm params={params} onParamChange={handleParamChange} />
+			<SearchForm
+				setCompanyParams={setCompanyParams}
+				setIndustryParams={setIndustryParams}
+			/>
 			<JobsPagination page={page} setPage={setPage} hasNextPage={hasNextPage} />
 			<div className="cardsWrapper">
 				{loading && <h1>Loading...</h1>}

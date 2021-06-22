@@ -1,14 +1,33 @@
 import { Select } from "antd";
-
 const { Option } = Select;
 
-const children = [];
+const industries = [
+	"Client Services",
+	"Engineering",
+	"Media",
+	"Tech",
+	"Social Media",
+	"Government",
+	"Finance",
+];
+const companySize = ["Small Size", "Large Size", "Medium Size"];
+const industryList = [];
+const companyList = [];
 
-function handleChange(value) {
-	console.log(`selected ${value}`);
-}
+industries.forEach(industry =>
+	industryList.push(<Option key={industry}>{industry}</Option>)
+);
+companySize.forEach(company =>
+	companyList.push(<Option key={company}>{company}</Option>)
+);
 
-export default function SearchForm({ params, onParamChange }) {
+export default function SearchForm({ setCompanyParams, setIndustryParams }) {
+	function handleChangeIndustry(value) {
+		setIndustryParams(value);
+	}
+	function handleChangeCompany(value) {
+		setCompanyParams(value);
+	}
 	return (
 		<div className="searchContainer">
 			<div className="searchOne">
@@ -17,10 +36,10 @@ export default function SearchForm({ params, onParamChange }) {
 					allowClear
 					style={{ width: "100%" }}
 					placeholder="Please select"
-					defaultValue={["a10", "c12"]}
-					onChange={handleChange}
+					defaultValue={"Engineering"}
+					onChange={handleChangeIndustry}
 				>
-					{children}
+					{industryList}
 				</Select>
 			</div>
 			<div className="searchTwo">
@@ -29,10 +48,10 @@ export default function SearchForm({ params, onParamChange }) {
 					allowClear
 					style={{ width: "100%" }}
 					placeholder="Please select"
-					defaultValue={["a10", "c12"]}
-					onChange={handleChange}
+					defaultValue={"Large Size"}
+					onChange={handleChangeCompany}
 				>
-					{children}
+					{companyList}
 				</Select>
 			</div>
 		</div>

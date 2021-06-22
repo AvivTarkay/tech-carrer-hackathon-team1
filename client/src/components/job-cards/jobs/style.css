@@ -1,0 +1,14 @@
+.jobsContainer {
+	width: fit-content;
+
+	height: 90vh;
+	overflow-y: scroll;
+	display: flex;
+}
+::-webkit-scrollbar {
+	display: none;
+}
+.description {
+	text-align: center;
+	margin: 20px;
+}

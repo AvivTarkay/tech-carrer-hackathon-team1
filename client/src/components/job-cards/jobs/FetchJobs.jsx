@@ -14,7 +14,7 @@ const ACTIONS = {
 	UPDATE_HAS_NEXT_PAGE: "update-has-next-page",
 };
 
-const PF = process.env.REACT_APP_PUBLIC_URL;
+const PF = process.env.REACT_APP_PUBLIC_JOBS_URL;
 
 function reducer(state, action) {
 	switch (action.type) {
@@ -36,18 +36,19 @@ function reducer(state, action) {
 	}
 }
 
-export default function useFetchJobs(companyParams, industryParams, page) {
-	let BASE_URL = `${PF}?industry=Engineering&size=Small%20Size&size=Medium%20Size&size=Large%20Size&page=1&descending=true`;
+export default function useFetchJobs(/*companyParams, industryParams*/ page) {
+	let BASE_URL =
+		"https://www.themuse.com/api/public/jobs?category=Corporate&category=Data%20Science&category=Design&category=Editor&category=HR&category=IT&category=Marketing&category=Product&category=Project%20Management&category=Recruiting&category=Software%20Engineer&category=UX&level=Entry%20Level&level=Mid%20Level&level=Senior%20Level&level=management&level=Internship&page=1&descending=true";
 
-	const companyObj = {};
+	// const companyObj = {};
 
-	companyParams.forEach((key, i) => {
-		companyObj[`${i}`] = key.replace(/ /g, "%20");
-	});
-	const industry = {};
-	industryParams.forEach((key, i) => {
-		industry[`${i}`] = key.replace(/ /g, "%20");
-	});
+	// companyParams.forEach((key, i) => {
+	// 	companyObj[`${i}`] = key.replace(/ /g, "%20");
+	// });
+	// const industry = {};
+	// industryParams.forEach((key, i) => {
+	// 	industry[`${i}`] = key.replace(/ /g, "%20");
+	// });
 
 	const [state, dispatch] = useReducer(reducer, { jobs: [], loading: true });
 
