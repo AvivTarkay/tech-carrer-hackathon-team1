@@ -4,27 +4,20 @@ import { Container } from "react-bootstrap";
 import useFetchJobs from "./FetchJobs";
 import JobsPagination from "../../../pages/CompanyZone/smartJobs/JobsPagination";
 import SearchForm from "./SearchForm";
+import DrawerItem from "./DrawerItem";
 import SingleJob from "./singleJob";
 import "antd/dist/antd.css";
 import "./style.css";
 
-import { Drawer, List, Avatar, Divider, Col, Row } from "antd";
-
-const DescriptionItem = ({ title, content }) => (
-	<div className="site-description-item-profile-wrapper">
-		<p className="site-description-item-profile-p-label">{title}:</p>
-		{content}
-	</div>
-);
-
-const App = () => {
+const Jobs = () => {
 	const [toggle, setToggle] = useState(false);
-	// const [jobs, setJobs] = useState([]);
+	const [categories, setCategories] = useState([]);
+	const [level, setLevel] = useState([]);
 	const [page, setPage] = useState(1);
 
 	const { jobs, loading, error, hasNextPage } = useFetchJobs(
-		// companyParams,
-		// industryParams,
+		categories,
+		level,
 		page
 	);
 
@@ -36,25 +29,13 @@ const App = () => {
 		setToggle(toggle => !toggle);
 	};
 
-	// useEffect(() => {
-	// 	const getJobs = async () => {
-	// 		try {
-	// 			const response = await axios(
-	// 				"https://www.themuse.com/api/public/jobs?category=Corporate&category=Data%20Science&category=Design&category=Editor&category=HR&category=IT&category=Marketing&category=Product&category=Project%20Management&category=Recruiting&category=Software%20Engineer&category=UX&level=Entry%20Level&level=Mid%20Level&level=Senior%20Level&level=management&level=Internship&page=1&descending=true"
-	// 			);
-	// 			setJobs(response.data.results);
-	// 		} catch (error) {}
-	// 	};
-	// 	getJobs();
-	// }, []);
-
 	return (
 		<React.Fragment>
 			<Container className="my-4">
-				<h1 className="mb-4">Companies</h1>
+				<h1 className="mb-4">Jobs</h1>
 				<SearchForm
-				// setCompanyParams={setCompanyParams}
-				// setIndustryParams={setIndustryParams}
+					setCategoriesParam={setCategories}
+					setLevelParam={setLevel}
 				/>
 				<JobsPagination
 					page={page}
@@ -80,130 +61,16 @@ const App = () => {
 					setPage={setPage}
 					hasNextPage={hasNextPage}
 				/>
-
-				<Drawer
-					width={640}
-					placement="left"
-					closable={false}
-					onClose={onClose}
-					visible={toggle}
-				>
-					<p
-						className="site-description-item-profile-p"
-						style={{ marginBottom: 24 }}
-					>
-						User Profile
-					</p>
-					<p className="site-description-item-profile-p">Personal</p>
-					<Row>
-						<Col span={12}>
-							<DescriptionItem title="Full Name" content="Lily" />
-						</Col>
-						<Col span={12}>
-							<DescriptionItem
-								title="Account"
-								content="AntDesign@example.com"
-							/>
-						</Col>
-					</Row>
-					<Row>
-						<Col span={12}>
-							<DescriptionItem title="City" content="HangZhou" />
-						</Col>
-						<Col span={12}>
-							<DescriptionItem title="Country" content="China🇨🇳" />
-						</Col>
-					</Row>
-					<Row>
-						<Col span={12}>
-							<DescriptionItem title="Birthday" content="February 2,1900" />
-						</Col>
-						<Col span={12}>
-							<DescriptionItem title="Website" content="-" />
-						</Col>
-					</Row>
-					<Row>
-						<Col span={24}>
-							<DescriptionItem
-								title="Message"
-								content="Make things as simple as possible but no simpler."
-							/>
-						</Col>
-					</Row>
-					<Divider />
-					<p className="site-description-item-profile-p">Company</p>
-					<Row>
-						<Col span={12}>
-							<DescriptionItem title="Position" content="Programmer" />
-						</Col>
-						<Col span={12}>
-							<DescriptionItem title="Responsibilities" content="Coding" />
-						</Col>
-					</Row>
-					<Row>
-						<Col span={12}>
-							<DescriptionItem title="Department" content="XTech" />
-						</Col>
-						<Col span={12}>
-							<DescriptionItem title="Supervisor" content={<a>Lin</a>} />
-						</Col>
-					</Row>
-					<Row>
-						<Col span={24}>
-							<DescriptionItem
-								title="Skills"
-								content="C / C + +, data structures, software engineering, operating systems, computer networks, databases, compiler theory, computer architecture, Microcomputer Principle and Interface Technology, Computer English, Java, ASP, etc."
-							/>
-						</Col>
-					</Row>
-					<Divider />
-					<p className="site-description-item-profile-p">Contacts</p>
-					<Row>
-						<Col span={12}>
-							<DescriptionItem title="Email" content="AntDesign@example.com" />
-						</Col>
-						<Col span={12}>
-							<DescriptionItem
-								title="Phone Number"
-								content="+86 181 0000 0000"
-							/>
-						</Col>
-					</Row>
-					<Row>
-						<Col span={24}>
-							<DescriptionItem
-								title="Github"
-								content={
-									<a href="http://github.com/ant-design/ant-design/">
-										github.com/ant-design/ant-design/
-									</a>
-								}
-							/>
-						</Col>
-					</Row>
-				</Drawer>
+				{React.Children.toArray(
+					jobs?.results?.map(job => {
+						return <DrawerItem job={job} onClose={onClose} toggle={toggle} />;
+					})
+				)}
 			</Container>
 		</React.Fragment>
 	);
 };
-export default App;
-// function Jobs() {
-// 	useEffect(() => {
-// 		const getJobs = async () => {
-// 			try {
-// 				const response = await axios(
-// 					"https://www.themuse.com/api/public/jobs?category=Corporate&category=Data%20Science&category=Design&category=Editor&category=HR&category=IT&category=Marketing&category=Product&category=Project%20Management&category=Recruiting&category=Software%20Engineer&category=UX&level=Entry%20Level&level=Mid%20Level&level=Senior%20Level&level=management&level=Internship&page=1&descending=true"
-// 				);
-// 				console.log(response.data);
-// 			} catch (error) {
-// 				console.log(error);
-// 			}
-// 		};
-// 		getJobs();
-// 	}, []);
-
-// 	return <div></div>;
-// }
+export default Jobs;
 
 //* results
 // categories: Array(1)

@@ -4,19 +4,17 @@ import AdminPage from "./pages/admin-page";
 //Home page
 import Home from "./pages/home-page/Home";
 //HR page
-import Student from "./pages/student-page/Student";
+import Student from "./components/student-cards/studentCards/Student";
 import SpecificStudent from "./components/specificStudent/SpecificStudent";
 import HrRegisterForm from "./pages/hr-page/Hr-Register";
-import LinkdIn from "./components/job-cards/LinkdIn";
 import Jobs from "../src/components/job-cards/jobs/Jobs";
-import JobCards from "./pages/CompanyZone/JobCards";
 import StuSteps from "./components/steps/StuSteps";
 import StudentPersonal from "./pages/personal-page/StudentPersonal";
 import JobEditPage from "./pages/CompanyZone/JobEditPage";
 
 import { Switch, Route } from "react-router-dom";
 import AddJob from "./pages/CompanyZone/AddJob";
-import App from "./pages/CompanyZone/smartJobs/Companies";
+import Companies from "./pages/CompanyZone/smartJobs/Companies";
 
 function AdminRouter() {
 	return (
@@ -25,7 +23,7 @@ function AdminRouter() {
 				<Home />
 			</Route>
 			<Route path="/hr">
-				<App />
+				<Companies />
 			</Route>
 			<Route path="/JobEditPage">
 				<JobEditPage />
@@ -39,7 +37,6 @@ function AdminRouter() {
 			<Route path="/recruiter">
 				<Jobs />
 			</Route>
-			<Route path="/signUp/company"></Route>
 			<Route path="/student">
 				<Student />
 			</Route>

@@ -37,10 +37,7 @@ function reducer(state, action) {
 }
 
 export default function useFetchJobs(companyParams, industryParams, page) {
-	let BASE_URL = `${PF}?industry=Engineering&size=Small%20Size&size=Medium%20Size&size=Large%20Size&page=1&descending=true`;
-
 	const companyObj = {};
-
 	companyParams.forEach((key, i) => {
 		companyObj[`${i}`] = key.replace(/ /g, "%20");
 	});
@@ -51,11 +48,16 @@ export default function useFetchJobs(companyParams, industryParams, page) {
 
 	const [state, dispatch] = useReducer(reducer, { jobs: [], loading: true });
 
-	// if (Object.keys(industry).length !== 0) {
-	// 	BASE_URL = `${BASE_URL}&industry=${industry[0]}`;
-	// 	console.log(BASE_URL);
-	// }
 	useEffect(() => {
+		let BASE_URL = `${PF}?industry=Engineering&page=1&descending=true`;
+		companyParams.forEach(
+			value => (BASE_URL = BASE_URL.concat(`&size=${value}`))
+		);
+
+		industryParams.forEach(
+			value => (BASE_URL = BASE_URL.concat(`&industry=${value}`))
+		);
+
 		const cancelToken1 = axios.CancelToken.source();
 		dispatch({ type: ACTIONS.MAKE_REQUEST });
 		axios
@@ -93,7 +95,7 @@ export default function useFetchJobs(companyParams, industryParams, page) {
 			cancelToken1.cancel();
 			cancelToken2.cancel();
 		};
-	}, [page, BASE_URL]);
+	}, [page, companyParams, industryParams]);
 
 	return state;
 }

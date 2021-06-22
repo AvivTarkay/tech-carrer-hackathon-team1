@@ -35,28 +35,28 @@ function reducer(state, action) {
 			return state;
 	}
 }
-
-export default function useFetchJobs(/*companyParams, industryParams*/ page) {
-	let BASE_URL =
-		"https://www.themuse.com/api/public/jobs?category=Corporate&category=Data%20Science&category=Design&category=Editor&category=HR&category=IT&category=Marketing&category=Product&category=Project%20Management&category=Recruiting&category=Software%20Engineer&category=UX&level=Entry%20Level&level=Mid%20Level&level=Senior%20Level&level=management&level=Internship&page=1&descending=true";
-
-	// const companyObj = {};
-
-	// companyParams.forEach((key, i) => {
-	// 	companyObj[`${i}`] = key.replace(/ /g, "%20");
-	// });
-	// const industry = {};
-	// industryParams.forEach((key, i) => {
-	// 	industry[`${i}`] = key.replace(/ /g, "%20");
-	// });
-
+// &category=Data%20Science level=Entry%20Level
+export default function useFetchJobs(categories, level, page) {
 	const [state, dispatch] = useReducer(reducer, { jobs: [], loading: true });
 
-	// if (Object.keys(industry).length !== 0) {
-	// 	BASE_URL = `${BASE_URL}&industry=${industry[0]}`;
-	// 	console.log(BASE_URL);
-	// }
+	const companyObj = {};
+	categories.forEach((key, i) => {
+		companyObj[`${i}`] = key.replace(/ /g, "%20");
+	});
+	const levelObj = {};
+	level.forEach((key, i) => {
+		levelObj[`${i}`] = key.replace(/ /g, "%20");
+	});
+
 	useEffect(() => {
+		let BASE_URL = `${PF}?category=Corporate&page=1&descending=true`;
+
+		categories.forEach(
+			value => (BASE_URL = BASE_URL.concat(`&category=${value}`))
+		);
+
+		level.forEach(value => (BASE_URL = BASE_URL.concat(`&level=${value}`)));
+
 		const cancelToken1 = axios.CancelToken.source();
 		dispatch({ type: ACTIONS.MAKE_REQUEST });
 		axios
@@ -65,7 +65,6 @@ export default function useFetchJobs(/*companyParams, industryParams*/ page) {
 				params: { markdown: true, page: page },
 			})
 			.then(res => {
-				console.log(res.data);
 				dispatch({ type: ACTIONS.GET_DATA, payload: { jobs: res.data } });
 			})
 			.catch(e => {
@@ -94,7 +93,7 @@ export default function useFetchJobs(/*companyParams, industryParams*/ page) {
 			cancelToken1.cancel();
 			cancelToken2.cancel();
 		};
-	}, [page, BASE_URL]);
+	}, [page, categories, level]);
 
 	return state;
 }
